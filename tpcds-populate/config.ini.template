@@ -1,0 +1,8 @@
+[MySQL]
+host = localhost
+user = mysql_user
+password = mysql_pwd
+
+[tpcds]
+data_folder = /path/to/where/tpcds/data/are
+schema_script_path = path/to/the/tpcds/schema/creating/script/tpcds.sql

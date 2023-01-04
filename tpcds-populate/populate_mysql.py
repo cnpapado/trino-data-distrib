@@ -2,7 +2,7 @@ from configparser import ConfigParser
 from MySQL import MySQL
 
 # read credentials from configuration file
-config_file = 'credentials.config'
+config_file = 'config.ini'
 
 config = ConfigParser()
 config.read(config_file)
@@ -16,8 +16,12 @@ creds = {"host":host, "user":user, "password":pwd, "auth_plugin":"mysql_native_p
 # connect to the database
 db = MySQL("py_demo", creds, create=True)
 
+# read tpcds files and scripts from config file
+tpcds_data_folder = config['tpcds']['data_folder']
+tpcds_schema_script_path = config['tpcds']['schema_script_path']
+
 # create schema with the tpcds provided script
-db.exec_sql_script('../../tpcds/tools/tpcds.sql')
+db.exec_sql_script(tpcds_schema_script_path)
 
 tables = ["call_center","catalog_page","catalog_returns","catalog_sales",
     "customer_address","customer","customer_demographics","date_dim",
@@ -61,7 +65,7 @@ db.exec_sql("set sql_log_bin=0;")
 # load all tables
 for t in tables:
     print("Loading table {}...".format(t))
-    filename = "/home/c/Documents/Mathimata/9ο ΕΞΑΜΗΝΟ/Big Data/data/{}.dat".format(t)
+    filename = "{}/{}.dat".format(tpcds_data_folder, t)
     rows = db.load_table(t, filename)
     assert(rows == one_GB_rows[t])
 
@@ -69,3 +73,4 @@ for t in tables:
 db.exec_sql("set unique_checks = 1;")
 db.exec_sql("set foreign_key_checks = 1;")
 db.exec_sql("set sql_log_bin=1;")
+
