@@ -1,0 +1,26 @@
+Loading table customer_address
+Errors found: NoneLoading table warehouse
+Errors found: NoneLoading table promotion
+Errors found: NoneLoading table income_band
+Errors found: NoneLoading table reason
+Errors found: NoneLoading table dbgen_version
+Errors found: NoneLoading table ship_mode
+Errors found: NoneLoading table call_center
+Errors found: NoneLoading table catalog_sales
+Errors found: NoneLoading table date_dim
+Errors found: NoneLoading table customer_demographics
+Errors found: NoneLoading table store
+Errors found: NoneLoading table inventory
+Errors found: NoneLoading table customer
+Errors found: NoneLoading table web_returns
+Errors found: NoneLoading table catalog_page
+Errors found: NoneLoading table store_returns
+Errors found: NoneLoading table web_sales
+Errors found: NoneLoading table web_site
+Errors found: NoneLoading table web_page
+Errors found: NoneLoading table household_demographics
+Errors found: NoneLoading table catalog_returns
+Errors found: NoneLoading table store_sales
+Errors found: NoneLoading table time_dim
+Errors found: NoneLoading table item
+Errors found: None
