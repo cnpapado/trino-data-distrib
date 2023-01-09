@@ -1,32 +1,24 @@
-from getpass import getpass
-import os
-import subprocess
-from mysql.connector import connect, Error
-from tqdm.auto import tqdm
+from psycopg2 import connect, Error
 
 from Database import Database
 
-class MySQL(Database):
-    """Each MySQL class could correspond to one MySQL db.
-       (We should only need 1 but anyway)
-       
-        Must implement the methods of Database class for the MySQL db.
-    """
+class PostgreSQL(Database):
+   
 
     def __init__(self, db_name, creds, create=False):
-        """ Creates a MySQL db and connects to it.
+        """ Creates a PostgreSQL db and connects to it.
         """ 
 
         self.cursor = None
-        self.log = open("./log", "w+")
-
+        self.log = open("./log_pg", "w+")
         self.connection = connect(**creds)
+        self.connection.autocommit = True
         self.cursor = self.connection.cursor()
+        
 
         if create:
             try:
-                self.cursor.execute("SHOW DATABASES")
-                
+                self.cursor.execute("SELECT datname FROM pg_database")
                 database_names = [databases[0] for databases in self.cursor]
             
                 if db_name not in database_names:
@@ -38,9 +30,14 @@ class MySQL(Database):
             except Error as e:
                 print(e)
                 self.connection.close()
+        self.connection.close()
+        
+        creds_db = creds
+        creds_db["database"] = db_name
 
-        use_query = "USE "+db_name
-        self.cursor.execute(use_query)
+        self.connection = connect(**creds)
+        self.connection.autocommit = True
+        self.cursor = self.connection.cursor()
         # I am not closing the connection or cursor, yet
 
 
@@ -65,18 +62,14 @@ class MySQL(Database):
                 RuntimeError: if the num of table rows does not match the number lines in the input file 
         """
 
-        self.cursor = self.connection.cursor(dictionary=True)
-
-        self.cursor.execute("SET GLOBAL local_infile=1;")
-        # dat_files = os.listdir("./data")
-
         self.log.write("Loading table "+tname+"\n")
-        query = "LOAD DATA LOCAL INFILE '%s' INTO TABLE %s FIELDS TERMINATED BY '|' LINES TERMINATED BY '\n'"%(filepath, tname)
+        query = "COPY {} FROM '{}' DELIMITER '|' NULL 'null';".format(tname, filepath)
+        # print("Query ====>  ", query)
 
         self.cursor.execute(query)
-        self.log.write("Errors found: "+str(self.cursor.fetchwarnings()))
-
-        self.connection.commit() 
+        self.log.write("Notices found: ")
+        for notice in self.connection.notices:
+            self.log.write(str(notice))
 
         return self.cursor.rowcount
 
@@ -93,13 +86,13 @@ class MySQL(Database):
                 RuntimeError: for each warning/error produced during the query's execution
         
         """
-        self.cursor = self.connection.cursor(dictionary=True, buffered=True)
+        self.cursor = self.connection.cursor()
         self.cursor.execute(query_str)
-        self.log.write("Errors found: "+str(self.cursor.fetchwarnings()))
+        self.log.write("Notices found: ")
+        for notice in self.connection.notices:
+            self.log.write(str(notice))
 
         self.connection.commit() 
-
-        # return [r for r in self.cursor]
 
 
     def exec_sql_script(self, script_filename):
@@ -114,18 +107,11 @@ class MySQL(Database):
                 RuntimeError: for each warning/error produced during the script's execution
         
         """
-
+        self.log = open("./log_pg", "w+")
         try:
-            with open(script_filename, 'r') as sql_file:
-                result_iterator = self.cursor.execute(sql_file.read(), multi=True)
-                for res in result_iterator:
-                    self.log.write("Running query: "+str(res))
-                    self.log.write(f"\nAffected {res.rowcount} rows" )
+            with self.connection as cursor:
+                self.cursor.execute(open(script_filename, "r").read())
         except RuntimeError:
-                print("Raised -> StopIteration") 
-
-        self.log.write("\n\n============finished running sql script================\n\n")
+                self.log.write("Error occured")
            
         self.connection.commit() 
-
-        sql_file.close()

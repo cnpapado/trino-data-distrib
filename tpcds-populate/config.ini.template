@@ -1,7 +1,13 @@
 [MySQL]
 host = localhost
-user = mysql_user
-password = mysql_pwd
+user = root
+password = root
+
+[PostgreSQL]
+host = localhost
+user = postgres
+password = postgres
+port = 5432
 
 [tpcds]
 data_folder = /path/to/where/tpcds/data/are
