@@ -1,6 +1,6 @@
 from getpass import getpass
-import os
-import subprocess
+# import os
+# import subprocess
 from mysql.connector import connect, Error
 from tqdm.auto import tqdm
 
