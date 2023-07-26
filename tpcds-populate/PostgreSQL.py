@@ -62,16 +62,36 @@ class PostgreSQL(Database):
                 RuntimeError: if the num of table rows does not match the number lines in the input file 
         """
 
-        self.log.write("Loading table "+tname+"\n")
-        query = "COPY {} FROM '{}' DELIMITER '|' NULL 'null';".format(tname, filepath)
-        # print("Query ====>  ", query)
+        """
+        Use the below only for loading data from and to the same machine!
+        """
+        # self.log.write("Loading table "+tname+"\n")
+        # query = "COPY {} FROM '{}' DELIMITER '|' NULL 'null';".format(tname, filepath)
+        # # print("Query ====>  ", query)
 
-        self.cursor.execute(query)
+        # self.cursor.execute(query)
+        # self.log.write("Notices found: ")
+        # for notice in self.connection.notices:
+        #     self.log.write(str(notice))
+
+        # return self.cursor.rowcount
+
+        """
+        Use the below for loading data from a different machine than the db server
+        """
+        self.log.write("Loading table " + tname + "\n")
+        query = f"COPY {tname} FROM STDIN WITH DELIMITER '|' NULL 'null' CSV"
+
+        with open(filepath, 'r') as f:
+            self.cursor.copy_expert(query, f)
+
         self.log.write("Notices found: ")
         for notice in self.connection.notices:
             self.log.write(str(notice))
 
         return self.cursor.rowcount
+
+
 
 
     def exec_sql(self, query_str):

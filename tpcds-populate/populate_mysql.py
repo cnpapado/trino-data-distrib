@@ -1,6 +1,5 @@
 from configparser import ConfigParser
 from MySQL import MySQL
-
 import time
 
 GREEN = '\033[92m'
@@ -9,10 +8,8 @@ CYAN = '\033[36m'
 BOLD = '\033[1m'
 RESET = '\033[0m'
 
-
 # read credentials from configuration file
 config_file = 'config.ini'
-
 config = ConfigParser()
 config.read(config_file)
 
@@ -73,6 +70,7 @@ db.exec_sql("set foreign_key_checks = 0;")
 db.exec_sql("set sql_log_bin=0;")
 
 # load all tables
+print(BOLD + "----Loading tables to MySQL---" + RESET)
 total_start_time = time.time()
 for t in tables:
     table_start_time = time.time()

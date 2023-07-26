@@ -1,14 +1,6 @@
-#!/bin/bash
-
 current_directory="$PWD"
-# ls
-#only use if executing directly and not using the run_scripts.sh
 mkdir -p ../data # create a folder for the input data files
-# ls
-cd ../DSGen-software-code-3.2.0rc1/tools 
-
-# mkdir -p data
-# cd DSGen-software-code-3.2.0rc1/tools
+cd ../DSGen-software-code-3.2.0rc1/tools
 
 ./dsdgen -dir ../../data/ -sc 1 -verbose # generate input data of 1GB size 
 

@@ -1,11 +1,16 @@
 from configparser import ConfigParser
 from PostgreSQL import PostgreSQL
-from pathlib import Path
-from tqdm.auto import tqdm
+import os
+import time
+
+GREEN = '\033[92m'
+RED = '\033[91m'
+CYAN = '\033[36m'
+BOLD = '\033[1m'
+RESET = '\033[0m'
 
 # read credentials from configuration file
 config_file = 'config.ini'
-
 config = ConfigParser()
 config.read(config_file)
 
@@ -37,7 +42,7 @@ one_GB_rows = {
     "catalog_page" : 11718,
     "catalog_returns" : 144067,
     "catalog_sales" : 1441548  ,
-    "customer_address" : 50000,
+    "customer_address" : 50000, 
     "customer" : 100000,
     "customer_demographics" : 1920800,
     "date_dim" : 73049,
@@ -55,21 +60,44 @@ one_GB_rows = {
     "time_dim" : 86400 ,
     "warehouse" : 5,
     "web_page" : 60,
-    "web_returns" : 717663,
+    "web_returns" : 71763,
     "web_sales" : 719384,
     "web_site" : 30
 }
 
-# load all tables
-full_path = str(Path.cwd())+"/data"
+# change to data folder dir
+# os.chdir('../')
+# path = os.getcwd()
+# full_path = os.path.join(path, "data")
 
-for t in tqdm(tables):
-    print("Loading table {}...".format(t))
-    filename = "{}/{}.dat".format(full_path, t)
+# load all tables
+print(BOLD + "----Loading tables to PostgreSQL----" + RESET)
+total_start_time = time.time()
+for t in tables:
+    table_start_time = time.time()
+    print(CYAN + "Loading table " + BOLD + t + RESET + CYAN + "..." + RESET)
+    # dat_file_name = "{}.dat".format(t)
+    # filename = os.path.join(full_path, dat_file_name)
+    filename = "{}/{}.dat".format(tpcds_data_folder, t)
+    # print("File path:", filename)
     rows = db.load_table(t, filename)
+    print(str(rows)+" Rows loaded from table " + t)
     # assert(rows == one_GB_rows[t])
-    if rows != one_GB_rows[t]:
-        print("Rows written -> ", rows, "   Rows expected -> ", one_GB_rows[t])
+    # if rows != one_GB_rows[t]:
+    #     print("Rows written -> ", rows, "   Rows expected -> ", one_GB_rows[t])
+    try:
+        assert(rows == one_GB_rows[t])
+    except AssertionError:
+        print(RED + str(rows) + " were loaded to table " + t + ", " + str(one_GB_rows[t]) + " were expected!" + RESET)
+        continue
+
+    table_end_time = time.time()
+    table_elapsed_time = table_end_time - table_start_time
+    print(GREEN + t + " table was loaded successfully in " + str(round(table_elapsed_time, 4)) + " seconds !" + RESET)
+
+total_end_time = time.time()
+total_elapsed_time = total_end_time - total_start_time
+print("Loading all tables took: " + BOLD + str(round(total_elapsed_time, 4)) + " seconds." + RESET)
 
 
 

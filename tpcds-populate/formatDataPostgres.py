@@ -1,5 +1,8 @@
-from pathlib2 import Path
+# from pathlib2 import Path
 import os
+
+BOLD = '\033[1m'
+RESET = '\033[0m'
 
 def replacetext(filepath, search_text, replace_text):
 	file = open(filepath, 'r', encoding = "latin-1")
@@ -26,10 +29,12 @@ def replacetext(filepath, search_text, replace_text):
 search_text = "\\N"
 replace_text = "null"
 
-path = "./data/"
+path = "../data/"
 data_files = os.listdir(path)
 
+print(BOLD + "----Formatting .dat files----" + RESET)
 for data_file in data_files:
     filepath = path+data_file
     print(filepath)
     replacetext(filepath, search_text, replace_text)
+print()
