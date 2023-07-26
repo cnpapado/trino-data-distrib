@@ -14,7 +14,7 @@ cd ../DSGen-software-code-3.2.0rc1/tools
 
 sed -i -e 's/^|/\\N|/' -e 's/||/|\\N|/g' -e 's/||/|\\N|/g' -e 's/|$/|/' ../../data/*.dat # replace all empty columns with /N (MySQL only)
 # ls -l
-split -l$((`wc -l < store_sales.dat`/5)) store_sales.dat store_sales.split.dat -da 10 # store_sales.dat in large so we split it into 10/2=5 files
+split -l$((`wc -l < ../../data/store_sales.dat`/5)) ../../data/store_sales.dat ../../data/store_sales.split.dat -da 10 # store_sales.dat in large so we split it into 10/2=5 files
 # ls -l
 mkdir -p ../../queries
 

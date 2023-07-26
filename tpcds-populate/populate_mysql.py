@@ -19,11 +19,12 @@ config.read(config_file)
 host = config['MySQL']['host']
 user = config['MySQL']['user']
 pwd = config['MySQL']['password']
+db_name = config['MySQL']['dbname']
 
 creds = {"host":host, "user":user, "password":pwd, "auth_plugin":"mysql_native_password", "allow_local_infile": True}
 
 # connect to the database
-db = MySQL("py_demo", creds, create=True)
+db = MySQL(db_name, creds, create=True)
 
 # read tpcds files and scripts from config file
 tpcds_data_folder = config['tpcds']['data_folder']

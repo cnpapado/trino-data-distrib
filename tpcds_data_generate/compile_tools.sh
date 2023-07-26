@@ -12,6 +12,7 @@ if [ -d "$workbench_path" ]; then
     sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
     sudo apt update
     sudo apt install gcc-9 -y
+    sudo apt-get install build-essential -y
 
     # Verify installation
     gcc-9 --version

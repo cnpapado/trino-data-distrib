@@ -6,6 +6,7 @@ sudo bash run.sh
 
 cd ../
 
+sudo apt install python3-pip -y
 python3 -m pip install -r requirements.txt
 cd tpcds-populate
 python3 populate_mysql.py
