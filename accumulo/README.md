@@ -2,7 +2,7 @@
 This is the installation guide for an Apache Accumulo 1.10.3 Database in an Ubuntu Server 22.04 LTS.
 
 ## [Prerequisites](https://accumulo.apache.org/release/accumulo-1.10.0/#minimum-requirements)
-- Apache Hadoop 3.3.4 (HDFS)
+- Apache Hadoop 3.0.3 (HDFS)
 - Apache ZooKeeper 3.4.14
 
 ### Apache Hadoop
@@ -31,9 +31,9 @@ cat .ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 
 #### Haddop Installation and Configuration
 ```
-wget https://archive.apache.org/dist/hadoop/common/hadoop-3.3.4/hadoop-3.3.4.tar.gz
-tar -xzf hadoop-3.3.4.tar.gz 
-mv hadoop-3.3.4 hadoop
+wget https://archive.apache.org/dist/hadoop/common/hadoop-3.0.3/hadoop-3.0.3.tar.gz
+tar -xzf hadoop-3.0.3.tar.gz 
+mv hadoop-3.0.3 hadoop
 ```
 
 ### Apache ZooKeeper
