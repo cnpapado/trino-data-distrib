@@ -3,7 +3,7 @@ This is the installation guide for an Apache Accumulo Database in an Ubuntu Serv
 
 ## Prerequisites
 - Apache HDFS
-- Apache ZooKeeper
+- Apache ZooKeeper<br />
 These systems must be active before Accumulo is started.
 
 ## install kubeadm, kubelet and kubectl
