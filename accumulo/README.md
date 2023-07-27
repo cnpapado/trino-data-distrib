@@ -5,9 +5,9 @@ This is the installation guide for an Apache Accumulo Database in an Ubuntu Serv
 - Apache HDFS
 - Apache ZooKeeper
 
-# Apache HDFS
+### Apache HDFS
 
-# Apache ZooKeeper
+### Apache ZooKeeper
 
 
 ```
