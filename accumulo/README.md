@@ -2,11 +2,12 @@
 This is the installation guide for an Apache Accumulo Database in an Ubuntu Server 22.04 LTS.
 
 ## Prerequisites
-- Passwordless SSH Connectivity
 - Apache HDFS (Hadoop)
 - Apache ZooKeeper
 
-### Passwordless SSH Connectivity
+### Apache HDFS
+Source: [https://github.com/kon-si/ntua_atds/tree/master/setup#hdfs-installation]
+#### Passwordless SSH Connectivity
 Apache Hadoop HDFS uses SSH keys for passwordless authentication Hadoop an our server.
 ~~~
 mkdir ~/.ssh
@@ -14,8 +15,6 @@ chmod 700 ~/.ssh
 touch ~/.ssh/authorized_keys
 chmod 600 ~/.ssh/authorized_keys
 ~~~
-
-### Apache HDFS
 
 ### Apache ZooKeeper
 
