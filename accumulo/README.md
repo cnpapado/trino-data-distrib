@@ -1,7 +1,7 @@
 # Accumulo Installation
 This is the installation guide for an Apache Accumulo 1.10.3 Database in an Ubuntu Server 22.04 LTS.
 
-## Prerequisites
+## [Prerequisites](https://accumulo.apache.org/release/accumulo-1.10.0/#minimum-requirements)
 - Apache Hadoop 3.3.4 (HDFS)
 - Apache ZooKeeper 3.4.14
 
