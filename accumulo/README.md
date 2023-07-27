@@ -6,7 +6,7 @@ This is the installation guide for an Apache Accumulo Database in an Ubuntu Serv
 - Apache ZooKeeper
 
 ### Apache HDFS
-Source: [https://github.com/kon-si/ntua_atds/tree/master/setup#hdfs-installation]
+Source: https://github.com/kon-si/ntua_atds/tree/master/setup#hdfs-installation
 #### Passwordless SSH Connectivity
 Apache Hadoop HDFS uses SSH keys for passwordless authentication Hadoop an our server.
 ~~~
