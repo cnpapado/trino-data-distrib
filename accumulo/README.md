@@ -168,3 +168,5 @@ clientPort=2181
 ```
 bin/zkServer.sh start
 ```
+
+## Accumulo
