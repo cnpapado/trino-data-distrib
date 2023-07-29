@@ -148,13 +148,23 @@ mv zookeeper-3.4.14 zookeeper
 #### Creating the Data Folder
 We create the data folder where ZooKeeper will store the in-memory database snapshots and the transaction log of updates to the database.
 ```
-sudo mkdir -p /usr/local/hadoop/hdfs/data
-sudo chown user:user -R /usr/local/hadoop/hdfs/data
-chmod 700 /usr/local/hadoop/hdfs/data
+sudo mkdir -p /usr/local/zookeeper/data
+sudo chown user:user -R /usr/local/zookeeper/data
+chmod 700 /usr/local/zookeeper/data
 ```
 
 #### Configuring ZooKeeper
 To configure ZooKeeper we add code to the following files:
 - zookeeper/conf/zoo.cfg
 ```
+tickTime=2000
+initLimit=10
+syncLimit=5
+dataDir=/usr/local/zookeeper/data
+clientPort=2181
+```
+
+#### Starting ZooKeeper
+```
+bin/zkServer.sh start
 ```
