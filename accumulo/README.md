@@ -50,7 +50,7 @@ And the JAVA_HOME environment variable, which contains the installation director
 ```
 export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 ```
-### Creating the Data Folder
+#### Creating the Data Folder
 We create the data folder where the HDFS Datanode will store its data.
 ```
 sudo mkdir -p /usr/local/hadoop/hdfs/data
@@ -136,11 +136,25 @@ start-dfs.sh
 ```
 
 ### Apache ZooKeeper
+Source: https://zookeeper.apache.org/doc/r3.4.14/zookeeperStarted.html
 
-
+#### Installing ZooKeeper
 ```
-kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.24.5/manifests/tigera-operator.yaml <br />
-kubectl create -f calico-config.yaml <br />
+wget https://archive.apache.org/dist/zookeeper/zookeeper-3.4.14/zookeeper-3.4.14.tar.gz
+tar -xzf zookeeper-3.4.14.tar.gz 
+mv zookeeper-3.4.14 zookeeper
 ```
 
-`kubectl create -f calico-config.yaml`
+#### Creating the Data Folder
+We create the data folder where ZooKeeper will store the in-memory database snapshots and the transaction log of updates to the database.
+```
+sudo mkdir -p /usr/local/hadoop/hdfs/data
+sudo chown user:user -R /usr/local/hadoop/hdfs/data
+chmod 700 /usr/local/hadoop/hdfs/data
+```
+
+#### Configuring ZooKeeper
+To configure ZooKeeper we add code to the following files:
+- zookeeper/conf/zoo.cfg
+```
+```
