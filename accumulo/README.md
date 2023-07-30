@@ -184,6 +184,7 @@ We copy the example configuration for a 3GB server. Despite our server having 8G
 ```
 cp ~/accumulo/conf/examples/3GB/standalone/* ~/accumulo/conf/
 ```
+And edit the following files:
 - accumulo/conf/accumulo-env.sh
 To configure Accumulo we fix the installation paths for the environment variables HADDOP_HOME, JAVA_HOME AND ZOOKEEPER_HOME:
 ```
@@ -201,3 +202,7 @@ test -z "$JAVA_HOME"             && export JAVA_HOME=/usr/lib/jvm/java-17-openjd
 test -z "$ZOOKEEPER_HOME"        && export ZOOKEEPER_HOME=/home/user/zookeeper
 test -z "$ACCUMULO_LOG_DIR"      && export ACCUMULO_LOG_DIR=$ACCUMULO_HOME/logs
 ```
+- accumulo/conf/accumulo-site.xml
+```
+```
+
