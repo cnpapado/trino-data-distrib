@@ -184,5 +184,20 @@ We copy the example configuration for a 3GB server. Despite our server having 8G
 ```
 cp ~/accumulo/conf/examples/3GB/standalone/* ~/accumulo/conf/
 ```
+- accumulo/conf/accumulo-env.sh
+To configure Accumulo we fix the installation paths for the environment variables HADDOP_HOME, JAVA_HOME AND ZOOKEEPER_HOME:
+```
+if [[ -z $HADOOP_HOME ]] ; then
+   test -z "$HADOOP_PREFIX"      && export HADOOP_PREFIX=/home/user/hadoop
+else
+   HADOOP_PREFIX="$HADOOP_HOME"
+   unset HADOOP_HOME
+fi
 
+# hadoop-2.0:
+test -z "$HADOOP_CONF_DIR"       && export HADOOP_CONF_DIR="$HADOOP_PREFIX/etc/hadoop"
 
+test -z "$JAVA_HOME"             && export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+test -z "$ZOOKEEPER_HOME"        && export ZOOKEEPER_HOME=/home/user/zookeeper
+test -z "$ACCUMULO_LOG_DIR"      && export ACCUMULO_LOG_DIR=$ACCUMULO_HOME/logs
+```
