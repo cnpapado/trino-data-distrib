@@ -170,3 +170,19 @@ bin/zkServer.sh start
 ```
 
 ## Accumulo
+Source: https://accumulo.apache.org/docs/2.x/administration/in-depth-install
+
+### Installing Accumulo
+```
+wget https://dlcdn.apache.org/accumulo/1.10.3/accumulo-1.10.3-bin.tar.gz
+tar -xzf accumulo-1.10.3-bin.tar.gz
+mv accumulo-1.10.3 accumulo
+```
+
+### Configuring Accumulo
+We copy the example configuration for a 3GB server. Despite our server having 8GB RAM we choose the 3GB configuration to accomodate for the RAM needed by Hadoop, ZooKeeper, Trino and the OS.
+```
+cp ~/accumulo/conf/examples/3GB/standalone/* ~/accumulo/conf/
+```
+
+
