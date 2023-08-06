@@ -78,11 +78,11 @@ To configure Hadoop we add code to the following files:
     </property>
     <property>
         <name>dfs.namenode.name.dir</name>
-        <value>file:///usr/local/hadoop/hdfs/data</value>
+        <value>file:///usr/local/hadoop/hdfs/data/nameNode</value>
     </property>
     <property>
         <name>dfs.datanode.data.dir</name>
-        <value>file:///usr/local/hadoop/hdfs/data</value>
+        <value>file:///usr/local/hadoop/hdfs/data/dataNode</value>
     </property>
 </configuration>
 ```
