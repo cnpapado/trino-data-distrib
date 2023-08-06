@@ -170,7 +170,7 @@ bin/zkServer.sh start
 ```
 
 ## Accumulo
-Source: https://accumulo.apache.org/docs/2.x/administration/in-depth-install
+Source: https://accumulo.apache.org/quickstart-1.x/
 
 ### Installing Accumulo
 ```
