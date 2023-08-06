@@ -4,7 +4,7 @@ This is the installation guide for an Apache Accumulo 1.10.3 Database in an Ubun
 ## [Prerequisites](https://accumulo.apache.org/release/accumulo-1.10.0/#minimum-requirements)
 - Java 17 (Accumulo requires version Java 8 or higher. We choose version 17 because of Trino requirements.)
 - Apache Hadoop 3.0.3 (HDFS)
-- Apache ZooKeeper 3.4.14
+- Apache ZooKeeper 3.6.4
 
 ### Java
 ```
