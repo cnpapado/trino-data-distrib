@@ -136,13 +136,14 @@ start-dfs.sh
 ```
 
 ### Apache ZooKeeper
-Source: https://zookeeper.apache.org/doc/r3.4.14/zookeeperStarted.html
+Source: https://phoenixnap.com/kb/install-apache-zookeeper
 
 #### Installing ZooKeeper
 ```
-wget https://archive.apache.org/dist/zookeeper/zookeeper-3.4.14/zookeeper-3.4.14.tar.gz
-tar -xzf zookeeper-3.4.14.tar.gz 
-mv zookeeper-3.4.14 zookeeper
+sudo wget https://archive.apache.org/dist/zookeeper/zookeeper-3.6.4/apache-zookeeper-3.6.4-bin.tar.gz
+sudo tar -xzf apache-zookeeper-3.6.4-bin.tar.gz
+mv apache-zookeeper-3.6.4-bin zookeeper
+sudo chown user:user -R ~/zookeeper
 ```
 
 #### Creating the Data Folder
@@ -158,15 +159,15 @@ To configure ZooKeeper we add code to the following files:
 - zookeeper/conf/zoo.cfg
 ```
 tickTime=2000
-initLimit=10
-syncLimit=5
 dataDir=/usr/local/zookeeper/data
 clientPort=2181
+initLimit=5
+syncLimit=2
 ```
 
 #### Starting ZooKeeper
 ```
-bin/zkServer.sh start
+sudo bin/zkServer.sh start
 ```
 
 ## Accumulo
