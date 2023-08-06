@@ -204,6 +204,18 @@ test -z "$ZOOKEEPER_HOME"        && export ZOOKEEPER_HOME=/home/user/zookeeper
 test -z "$ACCUMULO_LOG_DIR"      && export ACCUMULO_LOG_DIR=$ACCUMULO_HOME/logs
 ```
 - accumulo/conf/accumulo-site.xml
+We configure the location of Zookeeper and where to store data.
 ```
+  <property>
+    <name>instance.volumes</name>
+    <value>hdfs://192.168.0.2:9000/accumulo</value>
+    <description>comma separated list of URIs for volumes. example: hdfs://localhost:9000/accumulo</description>
+  </property>
+
+  <property>
+    <name>instance.zookeeper.host</name>
+    <value>localhost:2181</value>
+    <description>comma separated list of zookeeper servers</description>
+  </property>
 ```
 
