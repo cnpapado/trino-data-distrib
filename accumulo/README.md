@@ -229,3 +229,9 @@ After initialising we can start the Accumulo server.
 ```
 ./bin/start-all.sh
 ```
+
+
+## connector (fix documentation later/upload files)
+```
+scp $TRINO_HOME/plugin/accumulo/trino-accumulo-iterators-*.jar localhost:~/accumulo/lib/ext
+```
