@@ -218,4 +218,14 @@ We configure the location of Zookeeper and where to store data.
     <description>comma separated list of zookeeper servers</description>
   </property>
 ```
+We also change the secret key by setting instance.secret. For obvious reasons the setting is not listed here.
 
+### Initialising and Starting Accumulo
+Accumulo needs to be initialised.
+```
+sudo ./bin/accumulo init
+```
+After initialising we can start the Accumulo server.
+```
+./bin/start-all.sh
+```
