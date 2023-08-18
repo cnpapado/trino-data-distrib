@@ -1,0 +1,10 @@
+; Make neccessary changes
+[Accumulo]
+host = 
+port = 42424
+user = 
+password = 
+
+[tpcds]
+data_folder = ../data/
+data_schema_path = ../DSGen-software-code-3.2.0rc1/tools/tpcds.sql
