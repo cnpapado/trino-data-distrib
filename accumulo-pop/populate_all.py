@@ -65,15 +65,15 @@ conn = Accumulo(host=host, port=int(port), user=user, password=password)
 # 3. Create and populate tables
 
 print(BOLD + "----Loading tables to Accumulo----" + RESET)
-# total_start_time = time.time()
+total_start_time = time.time()
 
 sample_tables = list(data_tables)[:2]
 for table_name in sample_tables:
+    table_start_time = time.time()
     print(CYAN + "Loading table " + BOLD + table_name + RESET + CYAN + "..." + RESET)
 
     if not conn.table_exists(table_name):
         conn.create_table(table_name)
-        # print("Created table: " + table_name)
     bw = conn.create_batch_writer(table_name)
 
     rows_written = populate_table(data_schema_path, data_folder, bw, table_name)
@@ -81,5 +81,11 @@ for table_name in sample_tables:
     print(str(rows_written) + " Rows loaded from table " + table_name)
     if rows_written != expected_rows:
         print(RED + str(rows_written) + " were loaded to table " + table_name + ", " + str(expected_rows) + " were expected!" + RESET)
-    print(GREEN + table_name + " table was loaded successfully!" + RESET)
-    # print("Populated table: " + table_name)
+    
+    table_end_time = time.time()
+    table_elapsed_time = table_end_time - table_start_time
+    print(GREEN + table_name + " table was loaded successfully in " + str(round(table_elapsed_time, 4)) + " seconds !"+ RESET)
+
+total_end_time = time.time()
+total_elapsed_time = total_end_time - total_start_time
+print("Loading all tables took: " + BOLD + str(round(total_elapsed_time, 4)) + " seconds." + RESET)

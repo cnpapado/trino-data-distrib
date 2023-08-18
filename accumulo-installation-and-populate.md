@@ -1,4 +1,4 @@
-# Accumulo Installation
+# Accumulo Installation and Populate
 
 [Old insts](https://www.notion.so/Old-insts-0f64ad670f7e44dd86541a97918b021d?pvs=21)
 
@@ -6,11 +6,17 @@
 
 - **Installation source:** [https://github.com/cnpapado/trino-rhino/blob/main/accumulo/README.md](https://github.com/cnpapado/trino-rhino/blob/main/accumulo/README.md)
 
+The first part of this README is based on **kon-sl’s** documentation, mainly folowing the steps provided and adding a few debug tips and extra notes that were helpful in my installation. In this part, you will be guided through the full installation process to install and setup accumulo, including installing the right versions of Java, Hadoop, Apache Zookeeper and  Accumulo that best work with the config required by Trino!
+
+The second part is dedicated to populating the Accumulo Database. The script used is in python2 and uses pyaccumulo. For this step you will need to do some additional modifications on the accumulo server, so as to set up a proxy and lastly python2 and the necessary packages will need to be installed.
+
 ---
 
 ****************************Table of Contents****************************
 
 # Java
+
+- We will be using ********************openjdk-17********************
 
 ```
 sudo apt-get -y install openjdk-17-jdk-headless
@@ -30,6 +36,8 @@ Alternatively use `export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64` but it d
 
 # Hadoop
 
+- We will be using **hadoop-3.0.3**
+
 ### ******SSH Install******
 
 If ssh is already configured skip this step, make sure the ************authorized_keys************ are in place.
@@ -46,7 +54,7 @@ cat .ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 
 /********etc/hosts file template********
 
-This is an /etc/hosts file which you can use to check yours. Modifying it may cause the following packages to function improperly.
+This is an /etc/hosts file which you can use to check yours. Modifying it may cause the following packages to function improperly. In most cases, leave your hosts file as is.
 
 ```jsx
 127.0.0.1       localhost
@@ -62,11 +70,11 @@ ff02::2 ip6-allrouters
 
 ### ******Hadoop Installation******
 
-⇒ **********Important Notice:********** For the Download/Install of the following packages, it is recommended to use ************************Downloads************************  and ********Installs******** directories respectively. 
+⇒ **********Notice:********** For the Download/Install of the following packages, it is recommended to use ************************Downloads************************  and ********Installs******** directories respectively. 
 
 To unzip to the Installs directory: `tar -xzf [tarball-name] -C [Installs Dir: e.x. ../Installs]`
 
-Everything else is performed as follows:
+Everything else is performed as follows either with or without the mentioned folders:
 
 1. ******************Download and unzip******************
     
@@ -111,7 +119,7 @@ Everything else is performed as follows:
     
     To configure Hadoop we add code to the following files:
     
-    Change the IP to your machine’s or to `localhost`. In previous installs when using `localhost`, it was found that it maybe favorable to use `127.0.0.1` instead!
+    Change the IP to your machine’s IP or to `localhost`. In previous installs when using `localhost`, it was found that it maybe favorable to use `127.0.0.1` instead!
     
     - hadoop/etc/hadoop/**hadoop-env.sh**
     
@@ -148,6 +156,15 @@ Everything else is performed as follows:
             <value>file:///usr/local/hadoop/hdfs/data/dataNode</value>
         </property>
     </configuration>
+    ```
+    
+    ⇒ The above seems to be sufficient in general, but in testing I was prompted to add the following:
+    
+    ```bash
+    <property>
+            <name>dfs.datanode.synconclose</name>
+            <value>true</value>
+    </property>
     ```
     
     - hadoop/etc/hadoop/**yarn-site.xml**
@@ -245,6 +262,8 @@ Everything else is performed as follows:
 
 # Apache ZooKeeper
 
+- We will be using **apache-zookeeper-3.6.4** *********************************************************(important not to use earlier versions, not compatible with java17)*********************************************************
+
 Source: [https://phoenixnap.com/kb/install-apache-zookeeper](https://phoenixnap.com/kb/install-apache-zookeeper)
 
 ### **Installing ZooKeeper**
@@ -305,6 +324,8 @@ tcp6       0      0 :::2181                 :::*                    LISTEN
 ---
 
 # Accumulo
+
+- We will be using ******************************accumulo-1.10.3******************************
 
 Source: [https://accumulo.apache.org/quickstart-1.x/](https://accumulo.apache.org/quickstart-1.x/)
 
@@ -384,7 +405,7 @@ After initialising we can start the Accumulo server. ******************Make sure
 ./bin/start-all.sh
 ```
 
-**************⇒ Important notice!************** First start ZooKeeper! If nothing is already running:
+**************⇒ Important notice!************** First start Hadoop and ZooKeeper in that order! If nothing is already running:
 
 ```jsx
 yiannos@yiannos-ub:~/$ **start-dfs.sh**
@@ -414,14 +435,19 @@ Starting tracer on localhost
 ### **********************Check that accumulo is running:**********************
 
 - Check **monitor:** [http://localhost:9995/](http://localhost:9995/)
-- ********************PORT 9995******************** is specific to this accumulo version
+- ********************PORT 9995** is specific to this accumulo version
 
-# Starting/Stopping-yiannos
+# Starting/ Stopping services
 
-`ulimit -n 32768`
+After all installations are complete, hopefully you will only need to execute this part each time.
+
+→ Accumulo prompts us to increase the **ulimit**, this is only a warning, but it would be best to do so. You can edit the limits.conf or the ~/.bashrc to do this on startup but it is recommended to leave the settings as is! Instead when starting the services use the following command each time, to increase the ulimit for this session. You can check your ulimit with `ulimit -n`.
+
+Configure the following to your workspace. It is also possible but relatively unneccessary to create a bash script with the following:
 
 ```bash
 ****************************Start Accumulo****************************
+ulimit -n 32768
 start-dfs.sh
 sudo /home/yiannos/Desktop/Projects/Installs/zookeeper/bin/zkServer.sh start
 /home/yiannos/Desktop/Projects/Installs/accumulo/bin/start-all.sh
@@ -437,19 +463,35 @@ jps
 
 ## Connecting with Accumulo
 
+When everything is set up, you will be able to access Accumulo through the port specified earlier, or through its command line tool. From here you can make any needed changes to the tables and the Accumulo instance.
+
 ```bash
 /home/yiannos/Desktop/Projects/Installs/accumulo/bin/accumulo shell -u root -p 2001 -zi Acc-inst
 ```
 
-![Untitled](Accumulo%20Installation%20e6948ceb11d7452ab9d208bf7dd427ce/Untitled.png)
+******************************************************Accumulo Shell Basic Commands:******************************************************
+
+- delete table: `deletetable <table_name>`
+- go to table → `table call_center`
+- show contents → `scan`
 
 ---
 
 # Python-Connector
 
-We will be using **pyaccumulo** package, which is configured to run with python2.
+Lets first see a few notes on Accumulo’s Data Model, which will help us make sense of the workings of a key-value store Database like accumulo. The following are the fields specifying the key, meaning that theese are the identifiers of each value in the instance,
+
+1. Row ID: Identifies the row in a table.
+2. Column Family: Organizes the data into different categories.
+3. Column Qualifier: Adds additional organization within a column family.
+4. Column Visibility: Controls access to data within a cell
+5. Timestamp: Determines when the data was inserted or updated
+
+- We will be using **pyaccumulo** package, which is configured to run with **python2**.
 
 ### 1. Install python2 & create venv
+
+Pyaccumulo is created for python2, and modifying it for python3 is not worth the effort, so we will be using python2 instead. Take notice of the minor differences in syntax compared to python3 when writing python2 scripts.
 
 - `pip install virtualenv`
 - `virtualenv -p python2 myenv`
@@ -458,10 +500,18 @@ We will be using **pyaccumulo** package, which is configured to run with python2
 
 ### 2. Create the proxy settings and start it
 
-Take notice that accumulo and stuff **must** be running
+Take notice that haddop, zookeeper and accumulo **must** be running, you can do that with the following:
+
+```bash
+****************************Start Accumulo****************************
+ulimit -n 32768
+start-dfs.sh
+sudo /home/yiannos/Desktop/Projects/Installs/zookeeper/bin/zkServer.sh start
+/home/yiannos/Desktop/Projects/Installs/accumulo/bin/start-all.sh
+```
 
 - navigate to **accumulo/conf**
-- Create a new (if not existing) file named “************************************proxy.properties************************************’ and add the following:
+- Create a new (if not existing) file named “************************************proxy.properties************************************’ and add the following. MOdify address, to be the same as your main installation and make sure to use the **instance name**, you are using.
     
     ```bash
     # The address the proxy will listen on
@@ -501,40 +551,18 @@ Take notice that accumulo and stuff **must** be running
     ```
     
 
-### 3. Write the connector and stuff .py file
+### 3. Notes on the population files
 
-- Create python file in a populate folder (your choice) and fill: **************************************→ currently in accumulo_pop/python_pop**************************************
-    
-    ```bash
-    from pyaccumulo import Accumulo, Mutation
-    
-    # Create a connection to Accumulo
-    conn = Accumulo(host='127.0.0.1', port=42424, user='root', password='***')
-    
-    # Create a table
-    table_name = "call_center_2"
-    conn.create_table(table_name)
-    
-    # Create a writer for the table
-    writer = conn.create_batch_writer(table_name)
-    
-    # Create a mutation for a row
-    mutation = Mutation('row1')
-    mutation.put(cf='cf1', cq='cq1', val='value1')
-    
-    # Add the mutation to the writer
-    writer.add_mutation(mutation)
-    
-    # Close the writer
-    writer.close()
-    ```
-    
-- Make sure to run it from venv created.
-- Check the monitor, the table will have been updated: [http://127.0.0.1:9995/master](http://127.0.0.1:9995/master)
+Be sure to always run everything from a python2 venv, after the proxy has been started.
 
-### extra info:
+Here is an outline of the population files in the  `accumulo-pop` folder.
 
-- delete table: `deletetable <table_name>`
-- go to table → `table call_center`
-- show contents → `scan`
--
+- ********************config.ini********************: Modify the config.ini.template according to your workspace and accumulo credentials. **************************************When using python2, NO brackets are needed in the config file, type each path or credential WITHOUT brackets.**************************************
+    - The data_folder need to point to the **data** folder containing the .dat files.
+    - The data_schema_path needs to point to the **tools/tpcds.sql** file
+- **find_schema**: Is used to check the database schema to create the tables  in accumulo, the function contained returns the ************************primary_key************************ and the **********************column_tags********************** as they were specified for a relational database.
+- ****************************populate_table****************************: Function that ceates and populates the table specified, the **column_id** for accumulo is “****************************table_name_RelDB_RowID****************************” but can be changed according to your requirements. Function returns number of rows written, considering the formality of row used in a relational db.
+- **populate_all**: Creates and populates all the required tables!
+- **delete_all**: Deletes the tables created for TPCDS, using the delete_table’s functions.
+
+All changes can be viewed as usual from the Accumulo Shell, or by checking the Accumulo Monitor: [http://127.0.0.1:9995/master](http://127.0.0.1:9995/master)
