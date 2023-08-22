@@ -1,0 +1,4 @@
+configparser==4.0.2
+pyaccumulo==1.5.0.9
+six==1.16.0
+thrift==0.16.0
