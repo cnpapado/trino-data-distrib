@@ -6,3 +6,4 @@ tpcds-populate/config.ini
 tpcds-populate/log
 accumulo-pop/*.pyc
 accumulo-pop/config.ini
+tpcds-populate/pg_venv

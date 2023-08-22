@@ -1,4 +1,26 @@
 Loading table call_center
 Notices found: Loading table catalog_page
 Notices found: Loading table catalog_returns
+Notices found: Loading table catalog_sales
+Notices found: Loading table customer_address
+Notices found: Loading table customer
+Notices found: Loading table customer_demographics
+Notices found: Loading table date_dim
+Notices found: Loading table dbgen_version
+Notices found: Loading table household_demographics
+Notices found: Loading table income_band
+Notices found: Loading table inventory
+Notices found: Loading table item
+Notices found: Loading table promotion
+Notices found: Loading table reason
+Notices found: Loading table ship_mode
+Notices found: Loading table store
+Notices found: Loading table store_returns
+Notices found: Loading table store_sales
+Notices found: Loading table time_dim
+Notices found: Loading table warehouse
+Notices found: Loading table web_page
+Notices found: Loading table web_returns
+Notices found: Loading table web_sales
+Notices found: Loading table web_site
 Notices found: 
