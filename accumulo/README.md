@@ -185,7 +185,7 @@ mv accumulo-1.10.3 accumulo
 ```
 
 ### Configuring Accumulo
-We run the following script to populate the conf directory with the initial config files. Despite our server having 8GB RAM we choose the 3GB configuration to accomodate for the RAM needed by Hadoop, ZooKeeper, Trino and the OS. When the script asks about memory-map type we choose Java.
+We run the following script to populate the conf directory with the initial config files. Despite our server having 8GB RAM we choose the 2GB configuration to accomodate for the RAM needed by Hadoop, ZooKeeper, Trino and the OS. When the script asks about memory-map type we choose Java.
 ```
 ./bin/bootstrap_config.sh
 ```
