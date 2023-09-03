@@ -163,6 +163,10 @@ dataDir=/usr/local/zookeeper/data
 clientPort=2181
 initLimit=5
 syncLimit=2
+admin.enableServer=false
+server.1=snf-38181:2888:3888
+
+4lw.commands.whitelist=*
 ```
 
 #### Starting ZooKeeper
