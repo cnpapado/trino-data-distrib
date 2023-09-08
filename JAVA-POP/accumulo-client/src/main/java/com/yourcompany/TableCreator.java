@@ -14,7 +14,7 @@ public class TableCreator {
         String instanceName = "Acc-inst";
         String zooServers = "127.0.0.1:2181";
         String user = "root";
-        String password = "2001";
+        String password = "***";
 
         try {
             // Connect to Accumulo

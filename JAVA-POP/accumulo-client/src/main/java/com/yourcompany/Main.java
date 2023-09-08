@@ -56,7 +56,7 @@ public class Main {
         String host = "127.0.0.1";
         String port = "2181";
         String user = "root";
-        String password = "2001";
+        String password = "****";
 
         Instance instance = new ZooKeeperInstance("Acc-inst", host + ":" + port);
         Connector connector = instance.getConnector(user, new PasswordToken(password));

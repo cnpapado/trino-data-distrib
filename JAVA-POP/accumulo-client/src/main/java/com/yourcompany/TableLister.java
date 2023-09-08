@@ -12,7 +12,7 @@ public class TableLister {
         String instanceName = "Acc-inst";
         String zooServers = "127.0.0.1";
         String user = "root";
-        String password = "2001";
+        String password = "***";
 
         // Connect to Accumulo
         Instance instance = new ZooKeeperInstance(instanceName, zooServers);
