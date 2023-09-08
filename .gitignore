@@ -4,6 +4,6 @@ tpcds-populate/__pycache__/
 tpcds-populate/trino_demo_venv/
 tpcds-populate/config.ini
 tpcds-populate/log
-accumulo-pop/*.pyc
-accumulo-pop/config.ini
+accumulo-pop/
+# accumulo-pop/config.ini
 tpcds-populate/pg_venv

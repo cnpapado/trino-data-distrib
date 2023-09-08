@@ -3,6 +3,12 @@ from configparser import ConfigParser
 from populate_table import populate_table
 import time
 
+
+import cProfile
+import pstats
+
+
+
 GREEN = '\033[92m'
 RED = '\033[91m'
 CYAN = '\033[36m'
@@ -64,17 +70,32 @@ conn = Accumulo(host=host, port=int(port), user=user, password=password)
 
 # 3. Create and populate tables
 
+pr = cProfile.Profile()
+pr.enable()
+
+
 print(BOLD + "----Loading tables to Accumulo----" + RESET)
 total_start_time = time.time()
 
-sample_tables = list(data_tables)[:2]
+# sample_tables = list(data_tables)[:2]
+sample_tables = list(data_tables[2:])
+# sample_tables = list("catalog_sales")
 for table_name in sample_tables:
+
+    if table_name=="catalog_sales": 
+        pr.disable()
+        with open("profiling_results.txt", "w") as file:
+            ps = pstats.Stats(pr, stream=file).sort_stats("cumulative")
+            ps.print_stats()
+        print("Profile Written")
+        break
     table_start_time = time.time()
     print(CYAN + "Loading table " + BOLD + table_name + RESET + CYAN + "..." + RESET)
 
     if not conn.table_exists(table_name):
         conn.create_table(table_name)
-    bw = conn.create_batch_writer(table_name)
+    bw = conn.create_batch_writer(table_name, max_memory=10000000)
+
 
     rows_written = populate_table(data_schema_path, data_folder, bw, table_name)
     expected_rows = one_GB_rows[table_name]
