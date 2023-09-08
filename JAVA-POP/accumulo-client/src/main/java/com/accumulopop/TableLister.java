@@ -9,10 +9,10 @@ public class TableLister {
 
     public static void main(String[] args) throws AccumuloException, AccumuloSecurityException {
         // Define Accumulo connection parameters
-        String instanceName = "Acc-inst";
-        String zooServers = "127.0.0.1";
+        String instanceName = "trino_accumulo";
+        String zooServers = "localhost";
         String user = "root";
-        String password = "***";
+        String password = "secret";
 
         // Connect to Accumulo
         Instance instance = new ZooKeeperInstance(instanceName, zooServers);

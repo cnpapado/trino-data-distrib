@@ -14,9 +14,7 @@ public class TablePopulator {
 
     public static int populateTable(String dataSchemaPath, String dataFolder, String tableName, Connector connector) throws Exception {
         List<String> columns = TableStructureExtractor.getColumns(dataSchemaPath, tableName);
-//        System.out.println(0);
-//        String tableDataFilePath = dataFolder + tableName + ".dat";
-//        String tableDataFilePath = "/home/yiannos/Desktop/Projects/Trino-Github/trino-rhino/data/" + tableName + ".dat";
+
         String tableDataFilePath = "/home/user/trino-rhino/data/" + tableName + ".dat";
 
         System.out.println(tableDataFilePath);
@@ -24,14 +22,12 @@ public class TablePopulator {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(tableDataFilePath));
 
-             BatchWriter writer = connector.createBatchWriter(tableName, null)) {
-//            System.out.println(1);
+            BatchWriter writer = connector.createBatchWriter(tableName, null)) {
             String line;
+
             while ((line = reader.readLine()) != null) {
-//                System.out.println(2);
                 String[] fields = line.split("\\|");
                 String rowId = tableName + "_" + fields[0];
-//                System.out.println(3);
                 Mutation m = new Mutation(rowId);
                 for (int i = 0; i < columns.size(); i++) {
                     m.put("info", columns.get(i), new Value(fields[i].getBytes()));

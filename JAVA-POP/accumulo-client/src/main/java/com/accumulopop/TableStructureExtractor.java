@@ -19,7 +19,6 @@ public class TableStructureExtractor {
             while ((line = reader.readLine()) != null) {
                 contentBuilder.append(line).append("\n");
             }
-
             String content = contentBuilder.toString();
             Pattern pattern = Pattern.compile("create table " + tableName + "\\s*\\(([^;]*)\\);", Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
             Matcher matcher = pattern.matcher(content);
@@ -33,7 +32,7 @@ public class TableStructureExtractor {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Exception Found!");
+            System.out.println("Exception Found in TableStructureExtractor!");
             // Properly handle exception in production scenarios.
         }
 
