@@ -50,15 +50,17 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         // Hardcoded values as per your request
-        String tpcdsDataSchemaPath = "/home/yiannos/Desktop/Projects/Trino-Github/trino-rhino/DSGen-software-code-3.2.0rc1/tools/tpcds.sql";
-        String tpcdsDataFolder = "../data/";
+//        String tpcdsDataSchemaPath = "/home/yiannos/Desktop/Projects/Trino-Github/trino-rhino/DSGen-software-code-3.2.0rc1/tools/tpcds.sql";
+        String tpcdsDataSchemaPath = "/home/user/trino-rhino/DSGen-software-code-3.2.0rc1/tools";
 
-        String host = "127.0.0.1";
+        String tpcdsDataFolder = "/home/user/trino-rhino/data/";
+
+        String host = "localhost";
         String port = "2181";
         String user = "root";
-        String password = "****";
+        String password = "secret";
 
-        Instance instance = new ZooKeeperInstance("Acc-inst", host + ":" + port);
+        Instance instance = new ZooKeeperInstance("trino_accumulo", host + ":" + port);
         Connector connector = instance.getConnector(user, new PasswordToken(password));
 
         System.out.println("\033[1m----Loading tables to Accumulo----\033[0m");

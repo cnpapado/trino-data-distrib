@@ -16,7 +16,9 @@ public class TablePopulator {
         List<String> columns = TableStructureExtractor.getColumns(dataSchemaPath, tableName);
 //        System.out.println(0);
 //        String tableDataFilePath = dataFolder + tableName + ".dat";
-        String tableDataFilePath = "/home/yiannos/Desktop/Projects/Trino-Github/trino-rhino/data/" + tableName + ".dat";
+//        String tableDataFilePath = "/home/yiannos/Desktop/Projects/Trino-Github/trino-rhino/data/" + tableName + ".dat";
+        String tableDataFilePath = "/home/user/trino-rhino/data/" + tableName + ".dat";
+
         System.out.println(tableDataFilePath);
         int rowCount = 0;
 
