@@ -272,6 +272,7 @@ create table web_site
 
 create table store_returns
 (
+    rowid                     integer                       ,
     sr_returned_date_sk       integer                       ,
     sr_return_time_sk         integer                       ,
     sr_item_sk                integer                       ,
@@ -359,6 +360,7 @@ create table catalog_page
 
 create table inventory
 (
+    rowid                     integer                       ,
     inv_date_sk               integer                       ,
     inv_item_sk               integer                       ,
     inv_warehouse_sk          integer                       ,
@@ -367,6 +369,7 @@ create table inventory
 
 create table catalog_returns
 (
+    rowid                     integer                       ,
     cr_returned_date_sk       integer                       ,
     cr_returned_time_sk       integer                       ,
     cr_item_sk                integer                       ,
@@ -398,6 +401,7 @@ create table catalog_returns
 
 create table web_returns
 (
+    rowid                     integer                       ,
     wr_returned_date_sk       integer                       ,
     wr_returned_time_sk       integer                       ,
     wr_item_sk                integer                       ,
@@ -426,6 +430,7 @@ create table web_returns
 
 create table web_sales
 (
+    rowid                     integer                       ,
     ws_sold_date_sk           integer                       ,
     ws_sold_time_sk           integer                       ,
     ws_ship_date_sk           integer                       ,
@@ -464,6 +469,7 @@ create table web_sales
 
 create table catalog_sales
 (
+    rowid                     integer                       ,
     cs_sold_date_sk           integer                       ,
     cs_sold_time_sk           integer                       ,
     cs_ship_date_sk           integer                       ,
@@ -502,6 +508,7 @@ create table catalog_sales
 
 create table store_sales
 (
+    rowid                     integer                       ,
     ss_sold_date_sk           integer                       ,
     ss_sold_time_sk           integer                       ,
     ss_item_sk                integer                       ,
