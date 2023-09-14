@@ -1,9 +1,10 @@
-package com.yourcompany;
+package com.accumulopop;
 
 import org.apache.accumulo.core.client.BatchWriter;
 import org.apache.accumulo.core.client.Connector;
 import org.apache.accumulo.core.data.Mutation;
 import org.apache.accumulo.core.data.Value;
+import org.apache.hadoop.io.Text;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -16,22 +17,26 @@ public class TablePopulator {
         List<String> columns = TableStructureExtractor.getColumns(dataSchemaPath, tableName);
 
         String tableDataFilePath = "/home/user/trino-rhino/data/" + tableName + ".dat";
-
-        System.out.println(tableDataFilePath);
         int rowCount = 0;
 
         try (BufferedReader reader = new BufferedReader(new FileReader(tableDataFilePath));
+             BatchWriter writer = connector.createBatchWriter(tableName, null)) {
 
-            BatchWriter writer = connector.createBatchWriter(tableName, null)) {
             String line;
 
             while ((line = reader.readLine()) != null) {
                 String[] fields = line.split("\\|");
-                String rowId = tableName + "_" + fields[0];
+//                String rowId = tableName + "_" + fields[0];
+                String rowId = fields[0];
+
                 Mutation m = new Mutation(rowId);
+
                 for (int i = 0; i < columns.size(); i++) {
-                    m.put("info", columns.get(i), new Value(fields[i].getBytes()));
+                    // Using the Text class from Hadoop for the column family and column qualifier
+                    String columnName = columns.get(i);
+                    m.put(new Text(columnName), new Text(columnName), new Value(fields[i].getBytes()));
                 }
+
                 writer.addMutation(m);
                 rowCount++;
             }
@@ -43,7 +48,5 @@ public class TablePopulator {
             return 0;
             // Properly handle exception in production scenarios.
         }
-
-
     }
 }

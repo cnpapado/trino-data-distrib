@@ -43,5 +43,5 @@ From command prompt run:
 *ACCUMULO_HOME must be configured!*
 
 ```c
-$ACCUMULO_HOME/bin/accumulo com.yourcompany.Main
+$ACCUMULO_HOME/bin/accumulo com.accumulopop.Main
 ```

@@ -1,4 +1,4 @@
-package com.yourcompany;
+package com.accumulopop;
 
 import java.util.ArrayList;
 import java.util.regex.*;

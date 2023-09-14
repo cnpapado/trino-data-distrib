@@ -1,11 +1,9 @@
-package com.yourcompany;
+package com.accumulopop;
 
 import org.apache.accumulo.core.client.*;
 import org.apache.accumulo.core.client.security.tokens.PasswordToken;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
 
 public class Main {
     private static final List<String> data_tables = Arrays.asList(
@@ -32,7 +30,12 @@ public class Main {
 
         System.out.println("\033[1m----Loading tables to Accumulo----\033[0m");
         long totalStartTime = System.currentTimeMillis();
+        int iter = 0;
         for (String tableName : data_tables) {
+            iter++;
+            if(iter==3){
+                break;
+            }
             long tableStartTime = System.currentTimeMillis();
             System.out.println("\033[36mLoading table \033[1m" + tableName + "\033[36m...\033[0m");
 

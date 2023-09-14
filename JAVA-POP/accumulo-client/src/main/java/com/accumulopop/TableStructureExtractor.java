@@ -1,4 +1,4 @@
-package com.yourcompany;
+package com.accumulopop;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
