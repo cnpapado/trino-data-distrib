@@ -57,4 +57,4 @@ Contains instructions and files for populating the Databases.
 ## Trino Performance Measurements
 For a detailed explanation of hte strategies used for this work, reference this work's paper:<br><br>
 ![Paper Preview](paper-image.png) <br>
-[View the full paper](paper.pdf)
+[View the full paper](trino_report.pdf)
